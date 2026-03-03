@@ -1,6 +1,20 @@
 import Student from "../models/student.js"
 
 export function getStudent(req,res){
+    
+    if(req.user == null){
+        res.json({
+            message : "cannot find user please login and try again."
+        })
+        return
+    }
+    if(req.user.role != "admin"){
+        res.json({
+            message : "Only admins can view students."
+        })
+        return
+    }
+
         Student.find().then((students)=>{
         res.json(students)
     })

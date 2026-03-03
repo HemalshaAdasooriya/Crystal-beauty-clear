@@ -23,15 +23,30 @@ app.use(
         const authorizationHeader = req.header("Authorization")
         if(authorizationHeader != null){
             const token = authorizationHeader.replace("Bearer ","")
-            console.log(token)
-        }
-        
-        next()
+            
+            jwt.verify(token,"secretKey96$2025",
+            (error,content)=>{
+                if(content == null){
+                    console.log("Invalid token")
+                    res.json({
+                        message : "Invalid token"
+                    })
+                    
+                }else{
+                    console.log(content)
+                    req.user = content
+                    next()
+                }
 
-})
+            }
+        )
+    }    
+}
+)
 
 
 app.use("/students",studentRouter) 
+
 app.use("/users",userRouter)
 
 
