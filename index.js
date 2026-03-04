@@ -33,14 +33,16 @@ app.use(
                     })
                     
                 }else{
-                    console.log(content)
+                    
                     req.user = content
                     next()
                 }
 
             }
         )
-    }    
+    }else{
+        next()
+    }  
 }
 )
 
