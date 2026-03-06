@@ -1,7 +1,6 @@
 import express from "express"
 import mongoose from "mongoose"
 import dns from "node:dns/promises";
-import studentRouter from "./routes/studentRouter.js";
 import userRouter from "./routes/userRouter.js";
 import jwt from "jsonwebtoken"
 dns.setServers(["1.1.1.1"]);
@@ -46,8 +45,6 @@ app.use(
 }
 )
 
-
-app.use("/students",studentRouter) 
 
 app.use("/users",userRouter)
 
