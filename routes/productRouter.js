@@ -5,6 +5,6 @@ const productRounter = express.Router();
 
 productRounter.get("/",getAllProducts);
 productRounter.post("/",createProduct);
-productRounter.delete("/",deleteProduct);
+productRounter.delete("/:productID",deleteProduct);
 
 export default productRounter

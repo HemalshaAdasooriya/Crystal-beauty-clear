@@ -47,17 +47,17 @@ export function getAllProducts(req,res){
     }
 }
 
-export function deleteProduct(res,req){
+export function deleteProduct(req,res){
     if(!isAdmin(req)){
-        res.status(403).json({
-            message : "only admin can delete products"
-        });
-        return
-    }
+    req.status(403).json({
+        message : "only admin can delete products"
+    });
+    return
+}
 
-    const productId = req.body.productId
+    const productID= req.params.productID
 
-    Product.deleteone({productId : productId}).then(
+    Product.deleteOne({productID : productID}).then(
         ()=>{
             res.json({
                 message : "Product deleted successfully"
