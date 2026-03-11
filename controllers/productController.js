@@ -30,7 +30,17 @@ export function createProduct(req,res){
 
 export function getAllProducts(req,res){
     if(isAdmin(req)){
-        Product.find()
+        Product.find().then(
+            (Products)=>{
+                res.json(Products)
+            }
+        )
+        .catch((error) => {
+            res.status(500).json({
+                message : "Error fetching products",
+                error : error.message
+            })
+        })
     }else{
         Product.find({isAvailable : true})
         .then(
@@ -61,6 +71,25 @@ export function deleteProduct(req,res){
         ()=>{
             res.json({
                 message : "Product deleted successfully"
+            }) 
+        }
+    )
+
+}
+
+export function updateProduct(req,res){
+    if(!isAdmin(req)){
+    req.status(403).json({
+        message : "only admin can update products"
+    });
+    return
+    }
+
+    const productID= req.params.productID
+    Product.updateOne({productID : productID},req.body).then(
+        ()=>{
+            res.json({
+                message : "Product updated successfully"
             }) 
         }
     )
